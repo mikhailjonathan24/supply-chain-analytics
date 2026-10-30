@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#153a63">
+    <title>Supply Chain &amp; Inventory Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none">
+          <path d="M3 27h26V10L16 3 3 10v17Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M8 27v-9h7v9m3-15h6v5h-6m0 4h6v6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="header-title">
+        <h1>SUPPLY CHAIN <span>&amp;</span> <em>INVENTORY ANALYTICS</em></h1>
+        <p>INVENTORY <b>·</b> DEMAND <b>·</b> SUPPLIERS <b>·</b> DELIVERY PERFORMANCE <b>·</b> STOCKOUTS <b>·</b> LOGISTICS</p>
+      </div>
+      <div class="header-promise">
+        <svg viewBox="0 0 40 32" fill="none" aria-hidden="true"><path d="M3 20h19V7h8l7 7v6h-3M8 25a3 3 0 1 0 0 .1m21-.1a3 3 0 1 0 0 .1M22 25H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 8h12M7 4h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span><strong>FROM RAW DATA</strong><small>TO SUPPLY CHAIN INSIGHTS</small></span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="filter-panel" aria-label="Dashboard filters">
+        <div class="filter-heading">
+          <div class="filter-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10m-7 6h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div><h2>Filters</h2><p>Update all metrics instantly</p></div>
+        </div>
+
+        <form id="filters" class="filter-form">
+          <fieldset class="date-filter">
+            <legend><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="5" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 3v4m8-4v4M3 9h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Date range</legend>
+            <div class="date-pair">
+              <label>From<input id="date-from" type="date" aria-label="Start date"></label>
+              <label>To<input id="date-to" type="date" aria-label="End date"></label>
+            </div>
+          </fieldset>
+          <label class="filter-field"><span class="filter-label"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m10 2 7 4v8l-7 4-7-4V6l7-4Z M3.5 6.2 10 10l6.5-3.8M10 10v8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>Product category</span>
+            <select id="category-filter"><option value="">All categories</option></select>
+          </label>
+          <label class="filter-field"><span class="filter-label"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 6h14v11H3zM6 6V3h8v3m-8 4h8m-8 3h5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>Product</span>
+            <select id="product-filter"><option value="">All products</option></select>
+          </label>
+          <label class="filter-field"><span class="filter-label"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 17h16M4 17V8h12v9M2 8l8-5 8 5m-10 9v-5h4v5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>Supplier / market</span>
+            <select id="market-filter"><option value="">All markets</option></select>
+          </label>
+          <label class="filter-field"><span class="filter-label"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M3 10h14M10 3c2 2 3 4.3 3 7s-1 5-3 7c-2-2-3-4.3-3-7s1-5 3-7Z" stroke="currentColor" stroke-width="1.3"/></svg>Region</span>
+            <select id="region-filter"><option value="">All regions</option></select>
+          </label>
+          <label class="filter-field"><span class="filter-label"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m2 8 8-5 8 5v9H2V8Zm4 9v-6h8v6m-8-7h.1m3.9 0h.1m3.9 0h.1" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>Warehouse (Market proxy)</span>
+            <select id="warehouse-filter" title="Warehouse is represented by Market because warehouse data is not present in the source">
+              <option value="">All warehouse proxies</option>
+            </select>
+          </label>
+          <label class="filter-field"><span class="filter-label"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 6h10v8H2zM12 9h3l3 3v2h-6zM5 17a1.5 1.5 0 1 0 0 .1m10-.1a1.5 1.5 0 1 0 0 .1" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>Shipping mode</span>
+            <select id="shipping-filter"><option value="">All shipping modes</option></select>
+          </label>
+          <label class="filter-field"><span class="filter-label"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 3h12v14H4zM7 7h6m-6 3h6m-6 3h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Order type</span>
+            <select id="type-filter"><option value="">All order types</option></select>
+          </label>
+          <button id="reset-filters" class="reset-button" type="button">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.3 8a6.8 6.8 0 1 1 .2 4.2M3 3.8v4.5h4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Reset filters
+          </button>
+        </form>
+        <div id="data-status" class="data-status" role="status">Waiting for cleaned dataset…</div>
+      </aside>
+
+      <section class="dashboard" aria-label="Supply chain analytics dashboard">
+        <div class="dashboard-toolbar">
+          <div><span class="eyebrow">EXECUTIVE OVERVIEW</span><span id="period-label" class="period-label">Loading data…</span></div>
+          <div class="live-badge"><span></span> LIVE FILTERS</div>
+        </div>
+
+        <section class="kpi-grid" aria-label="Key performance indicators">
+          <article class="kpi-card kpi-blue" title="Proxy only: filtered Sales total. This dataset has no on-hand inventory valuation.">
+            <div class="kpi-top"><span>Total inventory value*</span><span class="kpi-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 8.5 12 4l8 4.5v9L12 22l-8-4.5v-9Z M4.5 8.8 12 13l7.5-4.2M12 13v8" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            </span></div>
+            <strong id="kpi-inventory">—</strong><small id="compare-inventory">Sales total proxy · not stock on hand</small>
+          </article>
+          <article class="kpi-card kpi-violet">
+            <div class="kpi-top"><span>Total orders</span><span class="kpi-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span></div>
+            <strong id="kpi-orders">—</strong><small id="compare-orders">vs previous period</small>
+          </article>
+          <article class="kpi-card kpi-green">
+            <div class="kpi-top"><span>Units sold</span><span class="kpi-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16l-1.5 13h-13L4 7Zm4 0a4 4 0 0 1 8 0M9 11v5m6-5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span></div>
+            <strong id="kpi-units">—</strong><small id="compare-units">vs previous period</small>
+          </article>
+          <article class="kpi-card kpi-amber" title="Proxy estimate: distinct orders canceled or with Late_delivery_risk = 1. This is not a measured inventory stockout count.">
+            <div class="kpi-top"><span>Stockouts</span><span class="kpi-icon warning-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 1.9 20.5h20.2L12 2.8Z" fill="#F5B82E" stroke="#D7950B" stroke-width="1.3" stroke-linejoin="round"/><path d="M12 8v6m0 3.2v.1" stroke="#62430A" stroke-width="2" stroke-linecap="round"/></svg>
+            </span></div>
+            <strong id="kpi-stockouts">—</strong><small id="compare-stockouts">Canceled or high-risk orders · proxy</small>
+          </article>
+          <article class="kpi-card kpi-teal" title="Advance shipping + Shipping on time divided by delivered orders. Canceled orders excluded.">
+            <div class="kpi-top"><span>On-time delivery</span><span class="kpi-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M3 7h11v11H3zM14 11h4l3 3v4h-7zM7 18.5a1.5 1.5 0 1 0 0 .1m10 0a1.5 1.5 0 1 0 0 .1M6 10h5m-5 3h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span></div>
+            <strong id="kpi-ontime">—</strong><small id="compare-ontime">vs previous period</small>
+          </article>
+          <article class="kpi-card kpi-rose" title="Proxy only: sum of Order Item Total. This is net order value, not freight or logistics cost.">
+            <div class="kpi-top"><span>Logistics cost*</span><span class="kpi-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v14H4zM8 9h8m-8 3h5m-5 3h7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span></div>
+            <strong id="kpi-logistics">—</strong><small id="compare-logistics">Net order value proxy · not freight cost</small>
+          </article>
+        </section>
+
+        <section class="chart-grid" aria-label="Charts and fulfillment matrix">
+          <article class="chart-card">
+            <div class="card-heading"><h3>Inventory Level vs Demand Trend</h3><span>Units sold proxy · orders · Jan–Dec</span></div>
+            <div class="chart-wrap"><canvas id="chart-demand" aria-label="Monthly units sold as an inventory proxy and order count as demand, January through December"></canvas><div class="chart-empty hidden"></div></div>
+          </article>
+          <article class="chart-card">
+            <div class="card-heading"><h3>Stockouts by Product Category*</h3><span>Unique canceled / high-risk orders · proxy</span></div>
+            <div class="chart-wrap"><canvas id="chart-stockouts" aria-label="Unique canceled or high-risk orders by product category, used as a stockout proxy"></canvas><div class="chart-empty hidden"></div></div>
+          </article>
+          <article class="chart-card">
+            <div class="card-heading"><h3>Order Status Distribution</h3><span>Distinct orders · grouped source statuses</span></div>
+            <div class="chart-wrap"><canvas id="chart-status" aria-label="Order status distribution grouped into five source-status categories"></canvas><div class="chart-empty hidden"></div></div>
+          </article>
+          <article class="chart-card">
+            <div class="card-heading"><h3>Supplier Performance (On-Time Delivery)*</h3><span>Market used as supplier proxy</span></div>
+            <div class="chart-wrap"><canvas id="chart-supplier"></canvas><div class="chart-empty hidden"></div></div>
+          </article>
+          <article class="chart-card">
+            <div class="card-heading"><h3>Top 10 Products by Inventory Value*</h3><span>Sales value · proxy USD</span></div>
+            <div class="chart-wrap"><canvas id="chart-products" aria-label="Top ten products by sales value used as inventory-value proxy"></canvas><div class="chart-empty hidden"></div></div>
+          </article>
+          <article class="chart-card">
+            <div class="card-heading"><h3>Logistics Cost by Shipping Mode*</h3><span>Order Item Total · cost proxy USD</span></div>
+            <div class="chart-wrap"><canvas id="chart-shipping" aria-label="Order Item Total by shipping mode, used as logistics-cost proxy"></canvas><div class="chart-empty hidden"></div></div>
+          </article>
+          <article class="chart-card matrix-card">
+            <div class="card-heading"><h3>Inventory Levels by Warehouse*</h3><span>Units sold · market proxy</span></div>
+            <div class="matrix-wrap">
+              <table id="warehouse-table">
+                <caption class="sr-only">Units sold by product category and market proxy, used as a warehouse proxy because warehouse inventory data is absent</caption>
+                <thead></thead><tbody></tbody>
+              </table>
+              <div class="chart-empty hidden"></div>
+            </div>
+          </article>
+          <article class="chart-card">
+            <div class="card-heading"><h3>Delivery Time Trend</h3><span>Average delivery days · Jan–Dec</span></div>
+            <div class="chart-wrap"><canvas id="chart-delivery" aria-label="Average shipping duration for each calendar month"></canvas><div class="chart-empty hidden"></div></div>
+          </article>
+          <article class="chart-card">
+            <div class="card-heading"><h3>Demand Forecast (Next 6 Months)*</h3><span>Recent 3-month trend · units sold</span></div>
+            <div class="chart-wrap"><canvas id="chart-forecast" aria-label="Six latest historical months and six-month demand forecast based on a linear trend"></canvas><div class="chart-empty hidden"></div></div>
+          </article>
+        </section>
+
+        <section class="insights-card" aria-label="Automated key insights">
+          <div class="insights-title">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18h6m-5 3h4m-2-19a7 7 0 0 0-4 12.75c.6.4 1 1 1 1.75h6c0-.75.4-1.35 1-1.75A7 7 0 0 0 12 2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <strong>KEY INSIGHTS</strong>
+          </div>
+          <ul id="insights-list"><li>Insights will appear when the dataset is ready.</li></ul>
+        </section>
+      </section>
+    </main>
+
+    <div id="loading-overlay" class="loading-overlay" role="status" aria-live="polite">
+      <div class="loading-card">
+        <span class="spinner" aria-hidden="true"></span>
+        <strong id="loading-title">Loading cleaned DataCo dataset…</strong>
+        <span id="loading-detail">Reading data/processed/cleaned_dataco.csv</span>
+        <div class="loading-track"><span></span></div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>
